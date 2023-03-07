@@ -1,8 +1,9 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Fullstack | Nextjs',
-  description: 'Fullstack application using nextjs',
+  title: 'Blog | Nextjs',
+  description:
+    'Fullstack blog application using nextjs, prisma, typescript and more...',
 };
 
 export default function RootLayout({
