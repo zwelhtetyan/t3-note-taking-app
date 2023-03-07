@@ -1,3 +1,4 @@
+import PostCard from '@/components/PostCard';
 import PostForm from '@/components/PostForm';
 
 interface Post {
@@ -25,9 +26,7 @@ export default async function Home() {
       <PostForm />
 
       {allPosts.map(({ id, title }) => (
-        <h2 key={id} className='text-blue-700'>
-          {title}
-        </h2>
+        <PostCard key={id} id={id} title={title} />
       ))}
     </main>
   );

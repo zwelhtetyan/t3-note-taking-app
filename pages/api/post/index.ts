@@ -24,5 +24,16 @@ export default async function handler(
     } catch (error) {
       return res.status(500).json({ message: 'Error creating post!' });
     }
+  } else if (req.method === 'DELETE') {
+    const idToDelete = req.query.id;
+
+    if (idToDelete) {
+      try {
+        await prisma.post.delete({ where: { id: +idToDelete } });
+        return res.status(200).json({ message: 'successfully deleted' });
+      } catch (error) {
+        return res.status(500).json({ message: 'deleting post failed' });
+      }
+    }
   }
 }
