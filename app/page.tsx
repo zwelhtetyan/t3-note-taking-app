@@ -9,7 +9,7 @@ interface Post {
 }
 
 const getPosts = async (): Promise<Post[]> => {
-  const res = await fetch(`${process.env.BASE_URL}/api/post`, {
+  const res = await fetch(`https://fullstack-nextjs-neon.vercel.app/api/post`, {
     next: { revalidate: 0 },
   });
   const posts = await res.json();
