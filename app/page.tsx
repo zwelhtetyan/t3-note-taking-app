@@ -17,7 +17,7 @@ const getPosts = async (): Promise<Post[]> => {
 };
 
 export default async function Home() {
-  // const allPosts = await getPosts();
+  const allPosts = await getPosts();
 
   return (
     <main className='p-8'>
@@ -25,9 +25,9 @@ export default async function Home() {
 
       <PostForm />
 
-      {/* {allPosts.map(({ id, title }) => (
+      {allPosts.map(({ id, title }) => (
         <PostCard key={id} id={id} title={title} />
-      ))} */}
+      ))}
     </main>
   );
 }
