@@ -25,7 +25,7 @@ export default async function Home() {
 
       <PostForm />
 
-      {allPosts.map(({ id, title }) => (
+      {allPosts?.map(({ id, title }) => (
         <PostCard key={id} id={id} title={title} />
       ))}
     </main>
