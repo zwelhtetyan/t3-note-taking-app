@@ -7,19 +7,23 @@ export const authOptions: NextAuthOptions = {
       name: 'Credentials',
       credentials: {},
       async authorize(credentials, req) {
-        const res = await fetch('/your/endpoint', {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-          headers: { 'Content-Type': 'application/json' },
-        });
-
-        const user = await res.json();
-
-        if (res.ok && user) {
-          return user;
-        }
+        console.log(credentials);
 
         return null;
+
+        // const res = await fetch('/your/endpoint', {
+        //   method: 'POST',
+        //   body: JSON.stringify(credentials),
+        //   headers: { 'Content-Type': 'application/json' },
+        // });
+
+        // const user = await res.json();
+
+        // if (res.ok && user) {
+        //   return user;
+        // }
+
+        // return null;
       },
     }),
   ],

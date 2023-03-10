@@ -1,11 +1,23 @@
 'use client';
 
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { FormEvent } from 'react';
 
 export default function Login() {
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    const user = {
+      email: formData.get('email') || '',
+      password: formData.get('password') || '',
+    };
+
+    console.log(user);
+
+    await signIn('credentials', { ...user, redirect: false });
   };
 
   return (
@@ -15,14 +27,18 @@ export default function Login() {
     >
       <input
         type='email'
+        name='email'
         placeholder='email'
         className='bg-gray-200 p-2 rounded'
       />
+
       <input
         type='password'
+        name='password'
         placeholder='password'
         className='bg-gray-200 p-2 rounded'
       />
+
       <div className='flex space-x-2'>
         <p>If you don&apos;t have an account?</p>
         <Link href='/auth/register' className='text-blue-700'>

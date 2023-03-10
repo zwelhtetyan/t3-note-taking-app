@@ -33,12 +33,14 @@ export default function Register() {
         className='bg-gray-200 p-2 rounded'
         name='name'
       />
+
       <input
         type='email'
         placeholder='email'
         className='bg-gray-200 p-2 rounded'
         name='email'
       />
+
       <input
         type='password'
         placeholder='password'
