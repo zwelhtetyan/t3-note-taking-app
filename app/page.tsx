@@ -1,12 +1,13 @@
 import PostCard from '@/components/PostCard';
 import User from '@/components/User';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import next from 'next';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 const getAllPosts = async () => {
-  const res = await fetch('http://localhost:3000/api/post/getAllPosts');
+  const res = await fetch('http://localhost:3000/api/post/getAllPosts', {next: {revalidate: 10}});
   return await res.json();
 };
 
