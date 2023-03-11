@@ -1,5 +1,5 @@
+import PostCard from '@/components/PostCard';
 import User from '@/components/User';
-import { axiosInstance } from '@/lib/axios';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
@@ -38,10 +38,12 @@ export default async function Home() {
 
         <div className='mt-10'>
           {allPosts?.map((post: any) => (
-            <div key={post.id} className='mb-3 bg-gray-200 p-4 rounded'>
-              <h1 className='text-xl font-bold'>{post.title}</h1>
-              <p>{post.content}</p>
-            </div>
+            <PostCard
+              key={post.id}
+              id={post.id}
+              title={post.title}
+              content={post.content}
+            />
           ))}
         </div>
       </div>

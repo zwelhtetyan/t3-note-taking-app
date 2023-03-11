@@ -5,12 +5,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === 'GET') {
+  if (req.method === 'DELETE') {
+    const postId = req.query.postId as string;
+
     try {
-      const allPosts = await prisma.post.findMany({
-        include: { author: true },
-      });
-      res.status(200).json(allPosts);
+      await prisma.post.delete({ where: { id: postId } });
+
+      res.status(200).json({ message: 'User deleted successfully' });
     } catch (error) {
       console.log(error);
     }

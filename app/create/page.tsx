@@ -28,6 +28,7 @@ export default function CreatePost() {
     };
 
     await axiosInstance.post('/post/create', newPost);
+    router.refresh();
     router.push('/');
   };
 
