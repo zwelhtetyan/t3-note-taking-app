@@ -14,7 +14,7 @@ export default function PostCard({ id, title, content }: PostCardProps) {
 
   const handleDelete = async () => {
     await axiosInstance.delete(`/post/delete?postId=${id}`);
-    console.log('hi');
+    console.log('hi, successfully deleted');
     router.refresh();
   };
 

@@ -6,9 +6,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 const getAllPosts = async () => {
-  const res = await fetch('http://localhost:3000/api/post/getAllPosts', {
-    next: { revalidate: 10 },
-  });
+  const res = await fetch('http://localhost:3000/api/post/getAllPosts');
   return await res.json();
 };
 

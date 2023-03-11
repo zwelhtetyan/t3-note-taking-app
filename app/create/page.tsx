@@ -37,6 +37,7 @@ export default function CreatePost() {
       <Link href='/' className='block bg-black text-white py-2 px-3 rounded'>
         go back home
       </Link>
+
       <CreatePostForm
         titleRef={titleRef}
         contentRef={contentRef}

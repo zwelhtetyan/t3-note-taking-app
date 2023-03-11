@@ -9,6 +9,7 @@ export default async function handler(
     try {
       const allPosts = await prisma.post.findMany({
         include: { author: true },
+        orderBy: { createdAt: 'desc' },
       });
       res.status(200).json(allPosts);
     } catch (error) {
