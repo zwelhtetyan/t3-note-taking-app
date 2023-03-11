@@ -1,4 +1,4 @@
-import AuthContext from './auth/AuthContext';
+// import AuthContext from './auth/AuthContext';
 import './globals.css';
 
 export const metadata = {
@@ -14,9 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <AuthContext>
-        <body>{children}</body>
-      </AuthContext>
+      {/* <AuthContext> */}
+      <body>{children}</body>
+      {/* </AuthContext> */}
     </html>
   );
 }

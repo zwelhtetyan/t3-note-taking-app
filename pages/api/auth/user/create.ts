@@ -1,12 +1,18 @@
 import { prisma } from '@/lib/prismaClient';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+interface UserInfo {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    const userInfo = req.body;
+    const userInfo: UserInfo = req.body;
 
     const name = userInfo.name.trim();
     const email = userInfo.email.trim();
@@ -22,10 +28,8 @@ export default async function handler(
       return res.status(409).json({ message: 'User already exist' });
     }
 
-    console.log('hii');
-
     try {
-      await prisma.user.create({ data: { name, email } });
+      await prisma.user.create({ data: { name, email, password } });
       return res.status(200).json({ message: 'User created successfully' });
     } catch (error) {
       return res.status(500).json({ message: 'Failed to create user' });
