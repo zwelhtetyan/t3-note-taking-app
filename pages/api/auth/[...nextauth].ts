@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prismaClient';
+import { User } from '@/types';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -25,26 +26,23 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-  // callbacks: {
-  //   async jwt({ token, account, profile }) {
-  //     // Persist the OAuth access_token and or the user id to the token right after signin
-  //     // if (account) {
-  //     //   token.accessToken = account.access_token
-  //     //   token.id = profile.id
-  //     // }
+  callbacks: {
+    async session({ session, token }): Promise<any> {
+      const user: any = await prisma.user.findUnique({
+        where: { id: token.sub },
+      });
 
-  //     console.log({ token, account, profile });
-  //     return token;
-  //   },
+      const userInfo: User = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        image: user.image,
+        posts: user.posts,
+      };
 
-  //   async session({ session, token, user }) {
-  //     // Send properties to the client, like an access_token and user id from a provider.
-
-  //     console.log({ session, token });
-
-  //     return session;
-  //   },
-  // },
+      return userInfo;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
