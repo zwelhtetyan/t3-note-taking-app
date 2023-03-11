@@ -3,6 +3,7 @@
 import CreatePostForm from '@/components/CreatePostForm';
 import { axiosInstance } from '@/lib/axios';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
@@ -31,10 +32,15 @@ export default function CreatePost() {
   };
 
   return (
-    <CreatePostForm
-      titleRef={titleRef}
-      contentRef={contentRef}
-      handler={handlePost}
-    />
+    <>
+      <Link href='/' className='block bg-black text-white py-2 px-3 rounded'>
+        go back home
+      </Link>
+      <CreatePostForm
+        titleRef={titleRef}
+        contentRef={contentRef}
+        handler={handlePost}
+      />
+    </>
   );
 }
