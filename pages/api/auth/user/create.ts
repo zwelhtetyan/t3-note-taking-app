@@ -22,6 +22,8 @@ export default async function handler(
       return res.status(409).json({ message: 'User already exist' });
     }
 
+    console.log('hii');
+
     try {
       await prisma.user.create({ data: { name, email } });
       return res.status(200).json({ message: 'User created successfully' });

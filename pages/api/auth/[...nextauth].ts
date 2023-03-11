@@ -1,4 +1,6 @@
+import { prisma } from '@/lib/prismaClient';
 import NextAuth, { NextAuthOptions } from 'next-auth';
+import { getToken } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
@@ -8,14 +10,11 @@ export const authOptions: NextAuthOptions = {
       credentials: {},
       async authorize(credentials, req) {
         console.log(credentials);
+        const { email, password } = credentials as any;
 
-        return null;
+        const user = await prisma.user.findUnique({ where: { email } });
 
-        // const res = await fetch('/your/endpoint', {
-        //   method: 'POST',
-        //   body: JSON.stringify(credentials),
-        //   headers: { 'Content-Type': 'application/json' },
-        // });
+        console.log('users is: ', user);
 
         // const user = await res.json();
 
@@ -23,7 +22,7 @@ export const authOptions: NextAuthOptions = {
         //   return user;
         // }
 
-        // return null;
+        return null;
       },
     }),
   ],
