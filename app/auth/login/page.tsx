@@ -15,7 +15,7 @@ export default function Login() {
       password: formData.get('password') || '',
     };
 
-    await signIn('credentials', { ...user, callbackUrl: '/', redirect: false });
+    await signIn('credentials', { ...user, callbackUrl: '/' });
   };
 
   return (
