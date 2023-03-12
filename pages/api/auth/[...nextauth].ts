@@ -1,11 +1,12 @@
 import { prisma } from '@/lib/prismaClient';
 import { User } from '@/types';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
-  // session: { strategy: 'jwt' },
-
+  session: { strategy: 'jwt' },
+  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: 'Credentials',
