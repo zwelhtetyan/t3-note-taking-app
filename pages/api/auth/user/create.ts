@@ -1,18 +1,12 @@
 import { prisma } from '@/lib/prismaClient';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-interface UserInfo {
-  name: string;
-  email: string;
-  password: string;
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    const userInfo: UserInfo = req.body;
+    const userInfo = req.body;
 
     const name = userInfo.name.trim();
     const email = userInfo.email.trim();
