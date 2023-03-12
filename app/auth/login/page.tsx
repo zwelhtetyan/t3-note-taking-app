@@ -45,6 +45,13 @@ export default function Login() {
       </div>
 
       <button className='bg-zinc-800 text-white p-2 px-3 rounded'>Login</button>
+
+      <button
+        className='bg-zinc-800 text-white p-2 px-3 rounded'
+        onClick={() => signIn('github', { callbackUrl: '/' })}
+      >
+        Login with github
+      </button>
     </form>
   );
 }
