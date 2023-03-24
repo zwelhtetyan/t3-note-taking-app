@@ -3,7 +3,7 @@ import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
@@ -11,8 +11,6 @@ const Home: NextPage = () => {
   const user = session?.user;
 
   useEffect(() => {
-    console.log("hi");
-
     if (!(session || status === "loading")) {
       void router.push("/login");
     }

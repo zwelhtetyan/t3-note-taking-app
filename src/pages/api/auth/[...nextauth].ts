@@ -50,6 +50,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    // eslint-disable-next-line @typescript-eslint/require-await
     async session({ session, token, user }) {
       session.user.id = token.sub;
 
