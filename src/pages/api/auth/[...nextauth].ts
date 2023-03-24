@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
         username: { label: "email", type: "text" },
         password: { label: "password", type: "password" },
       },
-      async authorize(credentials: Credentials) {
+      async authorize(credentials: Credentials): Promise<any> {
         if (!credentials.email.trim() || !credentials.password.trim()) {
           throw new Error("Invalid credentials");
         }
