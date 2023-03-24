@@ -25,29 +25,31 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col items-center pt-20">
-      <input
-        type="text"
-        name="email"
-        placeholder="email"
-        className="mb-2 border border-blue-500 p-4"
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="password"
-        className="mb-2 border border-blue-500 p-4"
-      />
+    <div className="flex flex-col items-center justify-center pt-20">
+      <form onSubmit={handleSubmit} className="flex flex-col items-center">
+        <input
+          type="text"
+          name="email"
+          placeholder="email"
+          className="mb-2 border border-blue-500 p-4"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="password"
+          className="mb-2 border border-blue-500 p-4"
+        />
 
-      <p className="mb-3">
-        If you don&apos;t have an account?{" "}
-        <Link href="/register" className="text-blue-400">
-          Register
-        </Link>
-      </p>
+        <p className="mb-3">
+          If you don&apos;t have an account?{" "}
+          <Link href="/register" className="text-blue-400">
+            Register
+          </Link>
+        </p>
 
-      <button className="bg-black p-3 text-white">Login</button>
-    </form>
+        <button className="bg-black p-3 text-white">Login</button>
+      </form>
+    </div>
   );
 };
 

@@ -15,6 +15,7 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  jwt: { secret: process.env.JWT_SECRET },
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
@@ -23,35 +24,31 @@ export const authOptions: NextAuthOptions = {
         username: { label: "email", type: "text" },
         password: { label: "password", type: "password" },
       },
-      async authorize(credentials: Credentials): Promise<any> {
+      async authorize(credentials: Credentials) {
         if (!credentials.email.trim() || !credentials.password.trim()) {
           throw new Error("Invalid credentials");
         }
-
         const user = await prisma.user.findUnique({
           where: { email: credentials?.email },
         });
-
         if (!user) {
           throw new Error("Invalid credentials");
         }
-
         const matchPassword = bcrypt.compareSync(
           credentials.password,
           user.password
         );
-
         if (!matchPassword) {
           throw new Error("Invalid credentials");
         }
-
         return user;
       },
     }),
   ],
   callbacks: {
-    // eslint-disable-next-line @typescript-eslint/require-await
-    async session({ session, token, user }) {
+    async session({ session, token }) {
+      console.log({ session, token });
+
       session.user.id = token.sub;
 
       return session;
