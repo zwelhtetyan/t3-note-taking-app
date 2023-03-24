@@ -40,7 +40,7 @@ const Login = () => {
       />
 
       <p className="mb-3">
-        If you don't have an account?{" "}
+        If you don&apos;t have an account?{" "}
         <Link href="/register" className="text-blue-400">
           Register
         </Link>
