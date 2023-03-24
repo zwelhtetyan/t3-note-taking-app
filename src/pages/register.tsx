@@ -1,5 +1,4 @@
-// import { signIn } from "next-auth/react";
-import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import type { FormEvent } from "react";
 import { axiosInstance } from "~/lib/axiosInstance";
@@ -20,6 +19,8 @@ const Register = () => {
 
     try {
       await axiosInstance.post("/user/register", user);
+
+      await router.push("/login");
 
       // await signIn("credentials", { email, password });
     } catch (error) {
@@ -47,6 +48,13 @@ const Register = () => {
         placeholder="password"
         className="mb-2 border border-blue-500 p-4"
       />
+
+      <p className="mb-3">
+        Already have an account?{" "}
+        <Link href="/login" className="text-blue-400">
+          Login
+        </Link>
+      </p>
       <button className="bg-black p-3 text-white">Register</button>
     </form>
   );

@@ -1,8 +1,14 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth, { type NextAuthOptions } from "next-auth";
+import { type NextAuthOptions } from "next-auth";
 import { prisma } from "~/lib/prismaClient";
 import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from "next-auth/next";
+
+interface Credentials {
+  email: string;
+  password: string;
+}
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -17,7 +23,7 @@ export const authOptions: NextAuthOptions = {
         username: { label: "email", type: "text" },
         password: { label: "password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials: Credentials) {
         if (!credentials.email.trim() || !credentials.password.trim()) {
           throw new Error("Invalid credentials");
         }
@@ -30,7 +36,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Invalid credentials");
         }
 
-        const matchPassword = await bcrypt.compare(
+        const matchPassword = bcrypt.compareSync(
           credentials.password,
           user.password
         );
@@ -43,6 +49,13 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user.id = token.sub;
+
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);

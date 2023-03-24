@@ -1,7 +1,11 @@
 import { signIn } from "next-auth/react";
-import { FormEvent } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import type { FormEvent } from "react";
 
-const login = () => {
+const Login = () => {
+  const router = useRouter();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -14,6 +18,7 @@ const login = () => {
 
     try {
       await signIn("credentials", { ...user, redirect: false });
+      await router.push("/");
     } catch (err) {
       console.log(err);
     }
@@ -33,9 +38,17 @@ const login = () => {
         placeholder="password"
         className="mb-2 border border-blue-500 p-4"
       />
+
+      <p className="mb-3">
+        If you don't have an account?{" "}
+        <Link href="/register" className="text-blue-400">
+          Register
+        </Link>
+      </p>
+
       <button className="bg-black p-3 text-white">Login</button>
     </form>
   );
 };
 
-export default login;
+export default Login;
