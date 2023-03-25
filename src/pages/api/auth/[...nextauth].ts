@@ -4,6 +4,7 @@ import { prisma } from "~/lib/prismaClient";
 import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth/next";
+import GitHubProvider from "next-auth/providers/github";
 
 interface Credentials {
   email: string;
@@ -18,10 +19,14 @@ export const authOptions: NextAuthOptions = {
   jwt: { secret: process.env.JWT_SECRET },
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "email", type: "text" },
+        email: { label: "email", type: "text" },
         password: { label: "password", type: "password" },
       },
       async authorize(credentials: Credentials) {
@@ -47,7 +52,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session, token }) {
-      console.log({ session, token });
+      // console.log({ session, token });
 
       session.user.id = token.sub;
 

@@ -26,6 +26,12 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center pt-20">
+      <button
+        className="mb-6 rounded bg-black p-3 text-white"
+        onClick={() => signIn("github", { callbackUrl: "/" })}
+      >
+        SignIn with github
+      </button>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <input
           type="text"
