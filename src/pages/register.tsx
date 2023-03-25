@@ -1,10 +1,18 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import type { FormEvent } from "react";
+import { type FormEvent, useEffect } from "react";
 import { axiosInstance } from "~/lib/axiosInstance";
 
 const Register = () => {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      void router.push("/");
+    }
+  }, [session, router]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
