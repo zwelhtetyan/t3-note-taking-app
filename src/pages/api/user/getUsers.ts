@@ -11,6 +11,8 @@ export default async function handler(
 
   try {
     const allUsers = await prisma.user.findMany();
-    console.log(allUsers);
-  } catch (error) {}
+    res.status(200).json(allUsers);
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+  }
 }
