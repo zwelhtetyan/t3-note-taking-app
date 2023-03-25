@@ -1,5 +1,4 @@
-import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import Sidebar from "./Sidebar";
 import Users from "./Users";

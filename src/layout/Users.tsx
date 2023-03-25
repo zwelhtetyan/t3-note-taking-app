@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { fetcher } from "~/lib/fetcher";
 import defaultAvatar from "~/assets/images/default_profile.webp";
 
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
@@ -11,14 +11,14 @@ interface User {
 }
 
 const Users = () => {
-  const { data: users, isLoading } = useSWR("/api/user/getUsers", fetcher);
+  const { data, isLoading } = useSWR("/api/user/getUsers", fetcher);
 
-  console.log(users);
+  console.log(data);
 
   return (
     <aside className="w-80 border-l p-2">
       {isLoading && <p>Loading...</p>}
-      {users?.map((user: User) => (
+      {data?.map((user: User) => (
         <div key={user.id} className="flex items-center">
           <Image
             height={100}
