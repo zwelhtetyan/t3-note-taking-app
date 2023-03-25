@@ -11,6 +11,7 @@ export interface User {
 }
 
 const Users = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data, isLoading } = useSWR("/api/user/getUsers", fetcher);
 
   console.log(data);
@@ -18,7 +19,7 @@ const Users = () => {
   return (
     <aside className="w-80 border-l p-2">
       {isLoading && <p>Loading...</p>}
-      {data?.map((user: User) => (
+      {(data as User[])?.map((user: User) => (
         <div key={user.id} className="flex items-center">
           <Image
             height={100}
