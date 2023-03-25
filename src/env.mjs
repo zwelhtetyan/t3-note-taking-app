@@ -22,8 +22,6 @@ const server = z.object({
     // VERCEL_URL doesn't include `https` so it cant be validated as a URL
     process.env.VERCEL ? z.string().min(1) : z.string().url()
   ),
-  GITHUB_ID: z.string(),
-  GITHUB_SECRET: z.string(),
   // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
 });
 
@@ -47,8 +45,6 @@ const processEnv = {
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   JWT_SECRET: process.env.JWT_SECRET,
-  GITHUB_ID: process.env.GITHUB_ID,
-  GITHUB_SECRET: process.env.GITHUB_SECRET,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
