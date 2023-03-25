@@ -17,7 +17,7 @@ const Users = () => {
     <aside className="w-80 border-l p-2">
       {isLoading && <p>Loading...</p>}
       {users?.map((user: User) => (
-        <div>
+        <div key={user.id}>
           <p>{user.name}</p>
         </div>
       ))}
