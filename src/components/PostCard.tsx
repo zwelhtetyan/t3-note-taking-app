@@ -4,8 +4,6 @@ import defaultAvatar from "~/assets/images/default_profile.webp";
 import type { Post } from "~/types";
 
 const PostCard = ({ ...post }: Post) => {
-  const d = post.createdAt.slice(0, 10);
-
   return (
     <div className="mb-5 border-b pb-5">
       <header className="flex items-center">
