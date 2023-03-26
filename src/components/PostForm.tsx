@@ -21,7 +21,7 @@ const PostForm = () => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         type="text"
-        placeholder="What on your mind?"
+        placeholder="What's on your mind ?"
         className="input-primary"
       />
 

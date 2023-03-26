@@ -12,7 +12,7 @@ const UserCard = ({ ...user }: User) => {
         alt="user profile"
         className="mr-2 h-10 w-10 rounded-full"
       />
-      <p className="text-lg font-semibold">{user.name}</p>
+      <p className="text-lg">{user.name}</p>
     </div>
   );
 };
