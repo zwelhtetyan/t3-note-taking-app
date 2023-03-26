@@ -15,7 +15,7 @@ const Home: NextPage = () => {
 
       <Layout>
         <PostForm />
-        <div className="h-[1px] w-full bg-blue-300" />
+        <div className="w-full border-b" />
         <PostContainer />
       </Layout>
     </>
