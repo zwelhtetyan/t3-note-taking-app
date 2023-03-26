@@ -1,4 +1,5 @@
-import axios from "axios";
+import { axiosInstance } from "./axiosInstance";
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-export const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+export const fetcher = (url: string) =>
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  axiosInstance.get(url).then((res) => res.data);

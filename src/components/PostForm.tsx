@@ -1,20 +1,24 @@
 import { type FormEvent, useState } from "react";
+import { axiosInstance } from "~/lib/axiosInstance";
 
 const PostForm = () => {
   const [content, setContent] = useState("");
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    console.log(content);
+    await axiosInstance.post("/posts/create", { content });
+
+    setContent("");
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto flex w-full max-w-sm flex-col items-center"
+      className="mx-auto mb-5 flex w-full max-w-md flex-col items-center"
     >
       <input
+        value={content}
         onChange={(e) => setContent(e.target.value)}
         type="text"
         placeholder="What on your mind?"

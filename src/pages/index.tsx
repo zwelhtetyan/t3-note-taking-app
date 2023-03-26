@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import PostContainer from "~/components/PostContainer";
 import PostForm from "~/components/PostForm";
 import Layout from "~/layout/Layout";
 
@@ -14,6 +15,8 @@ const Home: NextPage = () => {
 
       <Layout>
         <PostForm />
+        <div className="h-[1px] w-full bg-blue-300" />
+        <PostContainer />
       </Layout>
     </>
   );
