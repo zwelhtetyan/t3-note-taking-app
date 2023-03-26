@@ -3,6 +3,8 @@ import defaultAvatar from "~/assets/images/default_profile.webp";
 import type { Post } from "~/types";
 
 const PostCard = ({ ...post }: Post) => {
+  const d = post.createdAt.slice(0, 10);
+
   return (
     <div className="mb-5 border-b pb-5">
       <header className="flex items-center">
@@ -16,7 +18,7 @@ const PostCard = ({ ...post }: Post) => {
 
         <div>
           <h3>{post.author?.name}</h3>
-          <p className="text-sm leading-4 text-neutral-500">1 min ago</p>
+          <p className="text-sm leading-4 text-neutral-500"></p>
         </div>
       </header>
 
