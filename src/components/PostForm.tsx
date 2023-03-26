@@ -1,14 +1,17 @@
 import { type FormEvent, useState } from "react";
+import useGetUsers from "~/hooks/useGetUsers";
 import { axiosInstance } from "~/lib/axiosInstance";
 
 const PostForm = () => {
   const [content, setContent] = useState("");
+  const { mutate: mutatePosts } = useGetUsers();
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     await axiosInstance.post("/posts/create", { content });
 
+    void mutatePosts();
     setContent("");
   };
 

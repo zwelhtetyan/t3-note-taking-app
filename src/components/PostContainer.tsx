@@ -1,16 +1,8 @@
-import useSWR from "swr";
-import { fetcher } from "~/lib/fetcher";
-import type { Post } from "~/types";
+import useGetUsers from "~/hooks/useGetUsers";
 import PostCard from "./PostCard";
 
 const PostContainer = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data, isLoading }: { data: Post[]; isLoading: boolean } = useSWR(
-    "/posts",
-    fetcher
-  );
-
-  console.log(data);
+  const { data, isLoading } = useGetUsers();
 
   return (
     <div className="mx-auto mt-5 w-full max-w-lg">
