@@ -6,7 +6,7 @@ const PostForm = () => {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    console.log("hi");
+    console.log(content);
   };
 
   return (
@@ -25,7 +25,7 @@ const PostForm = () => {
         <div className="flex-1" />{" "}
         <button
           disabled={content.trim().length < 1}
-          className="w-24 rounded-full bg-blue-300 p-2 hover:bg-blue-400 active:bg-blue-500 disabled:cursor-not-allowed"
+          className="w-24 rounded-full bg-blue-300 p-2 transition-all hover:bg-blue-400 active:bg-blue-500 disabled:cursor-not-allowed"
         >
           Tweet
         </button>
