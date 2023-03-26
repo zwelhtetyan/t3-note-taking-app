@@ -24,8 +24,12 @@ const Login = () => {
     const user = { email, password };
 
     try {
-      await signIn("credentials", { ...user, redirect: false });
-      await router.push("/");
+      const res = await signIn("credentials", { ...user, redirect: false });
+      if (res?.ok) {
+        return void router.push("/");
+      }
+
+      throw new Error(res?.error);
     } catch (err) {
       console.log(err);
     }
