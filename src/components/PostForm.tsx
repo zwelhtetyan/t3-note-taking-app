@@ -5,14 +5,22 @@ import { axiosInstance } from "~/lib/axiosInstance";
 const PostForm = () => {
   const [content, setContent] = useState("");
   const { mutate: mutatePosts } = useGetUsers();
+  const [posting, setPosting] = useState(false);
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    await axiosInstance.post("/posts/create", { content });
+    setPosting(true);
 
-    void mutatePosts();
-    setContent("");
+    try {
+      await axiosInstance.post("/posts/create", { content });
+      void mutatePosts();
+      setContent("");
+    } catch (err) {
+      console.log(err);
+    }
+
+    setPosting(false);
   };
 
   return (
@@ -30,7 +38,10 @@ const PostForm = () => {
 
       <div className="mt-6 flex w-full">
         <div className="flex-1" />{" "}
-        <button disabled={content.trim().length < 1} className="btn-primary">
+        <button
+          disabled={posting || content.trim().length < 1}
+          className="btn-primary"
+        >
           Tweet
         </button>
       </div>
