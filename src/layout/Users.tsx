@@ -8,7 +8,7 @@ const Users = () => {
   const { data, isLoading } = useSWR("/user/getUsers", fetcher);
 
   return (
-    <aside className="w-80 border-l p-2">
+    <aside className="hidden w-80 border-l p-2 lg:block">
       {isLoading && <p>Loading...</p>}
       {(data as User[])?.map((user: User) => (
         <UserCard key={user.id} {...user} />
