@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import PostForm from "~/components/PostForm";
 import Layout from "~/layout/Layout";
 
 const Home: NextPage = () => {
@@ -11,7 +12,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout>all feeds</Layout>
+      <Layout>
+        <PostForm />
+      </Layout>
     </>
   );
 };

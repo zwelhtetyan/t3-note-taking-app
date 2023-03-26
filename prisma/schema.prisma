@@ -14,8 +14,18 @@ model User {
   password        String?
   image           String?
   emailVerified   DateTime?
+  posts           Post[]
   accounts        Account[]
   sessions        Session[]
+  createdAt       DateTime @default(now())
+  updateAt        DateTime @updatedAt
+}
+
+model Post {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  content         String
+  authorId        String @db.ObjectId
+  author          User   @relation(fields: [authorId], references: [id])
   createdAt       DateTime @default(now())
   updateAt        DateTime @updatedAt
 }
