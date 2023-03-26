@@ -20,7 +20,7 @@ const Users = () => {
     <aside className="w-80 border-l p-2">
       {isLoading && <p>Loading...</p>}
       {(data as User[])?.map((user: User) => (
-        <div key={user.id} className="flex items-center">
+        <div key={user.id} className="mb-2 flex items-center">
           <Image
             height={100}
             width={100}
