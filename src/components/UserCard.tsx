@@ -4,7 +4,7 @@ import type { User } from "~/types";
 
 const UserCard = ({ ...user }: User) => {
   return (
-    <div className="mb-2 flex items-center">
+    <div className="mb-3 flex items-center">
       <Image
         height={100}
         width={100}

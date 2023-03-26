@@ -36,35 +36,41 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center pt-20">
+    <div className="mx-auto flex min-h-screen max-w-xs flex-col items-center justify-center">
       <button
-        className="mb-6 rounded bg-black p-3 text-white"
+        className="btn-primary mb-4 w-full rounded"
         onClick={() => signIn("github", { callbackUrl: "/" })}
       >
         SignIn with github
       </button>
-      <form onSubmit={handleSubmit} className="flex flex-col items-center">
+
+      <p className="mb-4 text-gray-500">OR</p>
+
+      <form
+        onSubmit={handleSubmit}
+        className="flex w-full flex-col items-center"
+      >
         <input
           type="text"
           name="email"
           placeholder="email"
-          className="mb-2 border border-blue-500 p-4"
+          className="input-primary mb-4"
         />
         <input
           type="password"
           name="password"
           placeholder="password"
-          className="mb-2 border border-blue-500 p-4"
+          className="input-primary mb-2"
         />
 
-        <p className="mb-3">
+        <p className="mb-6 self-start text-sm">
           If you don&apos;t have an account?{" "}
-          <Link href="/register" className="text-blue-400">
+          <Link href="/register" className="text-blue-600">
             Register
           </Link>
         </p>
 
-        <button className="bg-black p-3 text-white">Login</button>
+        <button className="btn-primary w-full rounded">Login</button>
       </form>
     </div>
   );

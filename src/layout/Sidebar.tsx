@@ -9,17 +9,18 @@ const Sidebar = () => {
       {session?.user ? (
         <>
           <p className="mb-3">This is sidebar</p>
-          <button
-            onClick={() => signOut()}
-            className="rounded bg-black p-2 text-white"
-          >
+          <button onClick={() => signOut()} className="btn-primary w-full">
             logout
           </button>
         </>
       ) : (
-        <div className="flex space-x-3 text-blue-500">
-          <Link href="/login">Login</Link>
-          <Link href="/register">Register</Link>
+        <div className="flex flex-col space-y-3">
+          <Link href="/login" className="btn-primary">
+            Login
+          </Link>
+          <Link href="/register" className="btn-primary">
+            Register
+          </Link>
         </div>
       )}
     </aside>

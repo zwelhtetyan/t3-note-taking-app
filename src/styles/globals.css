@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply rounded-full bg-blue-300 py-2 px-4 text-center transition-all hover:bg-blue-400 active:bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-100 disabled:text-gray-500;
+  }
+
+  .input-primary {
+    @apply w-full rounded border border-blue-300 bg-gray-100 py-2 px-4 outline-none focus:border-blue-500;
+  }
+}

@@ -37,33 +37,36 @@ const Register = () => {
   };
 
   return (
-    <form className="flex flex-col items-center pt-20" onSubmit={handleSubmit}>
+    <form
+      className="mx-auto flex min-h-screen max-w-xs flex-col items-center justify-center"
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         placeholder="name"
-        className="mb-2 border border-blue-500 p-4"
+        className="input-primary mb-4"
         name="name"
       />
       <input
         type="text"
         placeholder="email"
         name="email"
-        className="mb-2 border border-blue-500 p-4"
+        className="input-primary mb-4"
       />
       <input
         type="password"
         name="password"
         placeholder="password"
-        className="mb-2 border border-blue-500 p-4"
+        className="input-primary mb-2"
       />
 
-      <p className="mb-3">
+      <p className="mb-6 self-start text-sm">
         Already have an account?{" "}
         <Link href="/login" className="text-blue-400">
           Login
         </Link>
       </p>
-      <button className="bg-black p-3 text-white">Register</button>
+      <button className="btn-primary w-full rounded">Register</button>
     </form>
   );
 };

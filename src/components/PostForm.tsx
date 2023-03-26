@@ -22,15 +22,12 @@ const PostForm = () => {
         onChange={(e) => setContent(e.target.value)}
         type="text"
         placeholder="What on your mind?"
-        className="w-full rounded border border-blue-300 bg-gray-200 p-2 outline-none focus:border-blue-500"
+        className="input-primary"
       />
 
       <div className="mt-6 flex w-full">
         <div className="flex-1" />{" "}
-        <button
-          disabled={content.trim().length < 1}
-          className="w-24 rounded-full bg-blue-300 p-2 transition-all hover:bg-blue-400 active:bg-blue-500 disabled:cursor-not-allowed"
-        >
+        <button disabled={content.trim().length < 1} className="btn-primary">
           Tweet
         </button>
       </div>
