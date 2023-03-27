@@ -8,6 +8,6 @@
   }
 
   .input-primary {
-    @apply w-full rounded border border-blue-300 bg-gray-100 py-2 px-4 outline-none focus:border-blue-500;
+    @apply w-full rounded border border-blue-300 bg-gray-100 py-2 px-4 outline-none focus:border-blue-500 focus:outline-none;
   }
 }

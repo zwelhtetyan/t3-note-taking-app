@@ -5,7 +5,7 @@ const Sidebar = () => {
   const { data: session } = useSession();
 
   return (
-    <aside className="hidden w-64 border-r p-4 lg:block">
+    <aside className="hidden w-64 border-r p-4 dark:border-r-gray-700 lg:block">
       {session?.user ? (
         <>
           <p className="mb-3">This is sidebar</p>
