@@ -3,10 +3,11 @@ import useSWR from "swr";
 import { fetcher } from "~/lib/fetcher";
 import type { Post } from "~/types";
 
-const useGetUsers = () => {
+const useGetPosts = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data, isLoading, error, mutate } = useSWR("/posts", fetcher, {
-    refreshInterval: 3000,
+    // refreshInterval: 3000,
+    revalidateOnFocus: false,
   });
 
   return {
@@ -17,4 +18,4 @@ const useGetUsers = () => {
   };
 };
 
-export default useGetUsers;
+export default useGetPosts;

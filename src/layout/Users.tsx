@@ -5,7 +5,9 @@ import UserCard from "~/components/UserCard";
 
 const Users = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data, isLoading } = useSWR("/user/getUsers", fetcher);
+  const { data, isLoading } = useSWR("/user/getUsers", fetcher, {
+    revalidateOnFocus: false,
+  });
 
   return (
     <aside className="hidden w-80 border-l p-4 dark:border-l-gray-700 lg:block">

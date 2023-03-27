@@ -1,10 +1,10 @@
 import { type FormEvent, useState } from "react";
-import useGetUsers from "~/hooks/useGetUsers";
+import useGetPosts from "~/hooks/useGetPosts";
 import { axiosInstance } from "~/lib/axiosInstance";
 
 const PostForm = () => {
   const [content, setContent] = useState("");
-  const { mutate: mutatePosts } = useGetUsers();
+  const { mutate: mutatePosts } = useGetPosts();
   const [posting, setPosting] = useState(false);
 
   const handleSubmit = async (evt: FormEvent<HTMLFormElement>) => {
@@ -42,7 +42,7 @@ const PostForm = () => {
           disabled={posting || content.trim().length < 1}
           className="btn-primary"
         >
-          Tweet
+          {posting ? "Tweeting..." : "Tweet"}
         </button>
       </div>
     </form>

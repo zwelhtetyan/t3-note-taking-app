@@ -8,7 +8,9 @@ const Sidebar = () => {
     <aside className="hidden w-64 border-r p-4 dark:border-r-gray-700 lg:block">
       {session?.user ? (
         <>
-          <p className="mb-3">This is sidebar</p>
+          <p className="mb-3">
+            Welcome <span className="font-semibold">{session.user.name}</span>
+          </p>
           <button onClick={() => signOut()} className="btn-primary w-full">
             logout
           </button>

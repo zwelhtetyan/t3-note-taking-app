@@ -1,8 +1,8 @@
-import useGetUsers from "~/hooks/useGetUsers";
+import useGetPosts from "~/hooks/useGetPosts";
 import PostCard from "./PostCard";
 
 const PostContainer = () => {
-  const { data, isLoading } = useGetUsers();
+  const { data, isLoading } = useGetPosts();
 
   return (
     <div className="mx-auto mt-5 w-full max-w-lg">
