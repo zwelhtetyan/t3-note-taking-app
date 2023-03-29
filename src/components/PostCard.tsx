@@ -71,6 +71,25 @@ const PostCard = ({ ...post }: Post) => {
         </div>
 
         {/* ••• */}
+        <div className="dropdown-end dropdown">
+          <label
+            tabIndex={0}
+            className="btn h-7 min-h-0 w-5 rounded border-none bg-gray-300 text-neutral-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-white hover:dark:bg-gray-700"
+          >
+            •••
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu rounded-box w-52 border bg-base-100 p-2 shadow dark:border-gray-600"
+          >
+            <li>
+              <a>Edit</a>
+            </li>
+            <li>
+              <a>Delete</a>
+            </li>
+          </ul>
+        </div>
       </header>
 
       <div className="mt-2 ml-12">{post.content}</div>
