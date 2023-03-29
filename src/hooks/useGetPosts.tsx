@@ -6,7 +6,6 @@ import type { Post } from "~/types";
 const useGetPosts = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { data, isLoading, error, mutate } = useSWR("/posts", fetcher, {
-    // refreshInterval: 3000,
     revalidateOnFocus: false,
   });
 
