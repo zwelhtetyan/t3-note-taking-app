@@ -9,14 +9,6 @@ export default function handler(req: NextApiRequest, res: any) {
 
     io.on("connection", (socket) => {
       console.log("Client connected");
-
-      // Listen for events from the client
-      socket.on("hello", (data) => {
-        console.log(data); // { name: 'John' }
-
-        // Emit an event back to the client
-        // socket.emit("world", { message: `Hello, ${data.name}!` });
-      });
     });
   }
 
