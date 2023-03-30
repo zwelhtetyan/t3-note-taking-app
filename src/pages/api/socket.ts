@@ -17,10 +17,6 @@ export default function handler(req: NextApiRequest, res: any) {
         // Emit an event back to the client
         // socket.emit("world", { message: `Hello, ${data.name}!` });
       });
-
-      socket.on("disconnect", () => {
-        console.log("Client disconnected");
-      });
     });
   }
 
