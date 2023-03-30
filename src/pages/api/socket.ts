@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Server } from "socket.io";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function handler(req: NextApiRequest, res: any) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (!res.socket.server.io) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
     const io = new Server(res.socket.server);
 
     io.on("connection", (socket) => {
@@ -22,6 +24,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     });
   }
 
-  res.status(200).json({ message: "connect to socket.io" });
-  // res.end();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+  res.end();
 }
