@@ -29,6 +29,7 @@ export default async function handler(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const io = res.socket?.server.io;
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     io.emit("newPost", newPost);
 
     res.status(200).json(newPost);
