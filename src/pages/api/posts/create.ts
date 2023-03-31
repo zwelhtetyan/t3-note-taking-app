@@ -26,7 +26,8 @@ export default async function handler(
       data: { content: content as string, authorId: (session.user as User).id },
     });
 
-    const io = res.socket.server.io;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    const io = res.socket?.server.io;
 
     io.emit("newPost", newPost);
 
