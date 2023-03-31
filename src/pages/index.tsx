@@ -1,10 +1,22 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import { useEffect } from "react";
+
+import { io } from "socket.io-client";
 import PostContainer from "~/components/PostContainer";
 import PostForm from "~/components/PostForm";
 import Layout from "~/layout/Layout";
 
+export let socket: any;
+
 const Home: NextPage = () => {
+  useEffect(() => void socketInitializer(), []);
+
+  const socketInitializer = async () => {
+    await fetch("/api/socket");
+    socket = io();
+  };
+
   return (
     <>
       <Head>

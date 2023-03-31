@@ -21,13 +21,5 @@ const config = {
   images: {
     domains: ["avatars.githubusercontent.com"],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/socket.io/:path*",
-        destination: "/api/socket/:path*",
-      },
-    ];
-  },
 };
 export default config;

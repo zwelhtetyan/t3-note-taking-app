@@ -26,6 +26,10 @@ export default async function handler(
       data: { content: content as string, authorId: (session.user as User).id },
     });
 
+    const io = res.socket.server.io;
+
+    io.emit("newPost", newPost);
+
     res.status(200).json(newPost);
   } catch (err) {
     res.status(500).json({ message: "Something went wrong" });
