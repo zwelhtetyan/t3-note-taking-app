@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   useEffect(() => void socketInitializer(), []);
 
   const socketInitializer = async () => {
-    await axiosInstance.get("socket");
+    await axiosInstance.get("/socket");
     socket = io();
   };
 
