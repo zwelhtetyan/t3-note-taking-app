@@ -6,7 +6,7 @@ export const Header = () => {
 
   return (
     <div className="navbar bg-accent">
-      <div className="mx-auto flex w-full max-w-7xl items-center">
+      <div className="mx-auto flex w-full max-w-7xl items-center px-4">
         <div className="flex-1">
           <a className="text-xl font-bold normal-case">
             {sessionData?.user
