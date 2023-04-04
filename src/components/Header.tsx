@@ -20,7 +20,7 @@ export const Header = () => {
             <input
               type="text"
               placeholder="Search"
-              className="input-bordered input "
+              className="input-bordered input"
             />
           </div>
 
