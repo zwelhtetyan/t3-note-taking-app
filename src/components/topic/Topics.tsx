@@ -53,7 +53,7 @@ const Topics = () => {
     <div className="col-span-1 border-r border-r-neutral-focus p-4">
       <input
         type="text"
-        placeholder="Add topic"
+        placeholder="Create topic"
         className="input-bordered input w-full max-w-full"
         onKeyDown={handleKeyDown}
       />
