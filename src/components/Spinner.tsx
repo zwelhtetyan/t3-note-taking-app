@@ -1,6 +1,6 @@
-const Spinner = () => {
+const Spinner = ({ classes }: { classes?: string }) => {
   return (
-    <div role="status" className="flex w-full justify-center">
+    <div role="status" className={`flex w-full justify-center ${classes}`}>
       <svg
         aria-hidden="true"
         className="mr-2 inline h-8 w-8 animate-spin fill-gray-600 text-gray-200 dark:fill-gray-300 dark:text-gray-600"

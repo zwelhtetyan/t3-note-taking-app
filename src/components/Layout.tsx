@@ -1,10 +1,15 @@
 import { useSession } from "next-auth/react";
 import { ChildrenProp } from "~/types";
+import Spinner from "./Spinner";
 
 const Layout = ({ children }: ChildrenProp) => {
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status } = useSession();
 
-  if (!sessionData?.user) {
+  if (status.toString() === "loading") {
+    return <Spinner classes="mt-60" />;
+  }
+
+  if (status !== "loading" && !sessionData?.user) {
     return (
       <div className="flex min-h-[calc(100vh-64px)] w-full justify-center pt-60">
         You must login to take note.
