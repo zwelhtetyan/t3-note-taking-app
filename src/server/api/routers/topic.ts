@@ -4,7 +4,7 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 export const topicRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.topic.findMany({
-      where: { userId: ctx.session.user.id },
+      where: { authorId: ctx.session.user.id },
     });
   }),
 
@@ -12,7 +12,7 @@ export const topicRouter = createTRPCRouter({
     .input(z.object({ title: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.prisma.topic.create({
-        data: { title: input.title, userId: ctx.session.user.id },
+        data: { title: input.title, authorId: ctx.session.user.id },
       });
     }),
 });

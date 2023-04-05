@@ -50,7 +50,7 @@ const Topics = () => {
   }, [allTopics, loadingTopics]); // initialize default selected topic
 
   return (
-    <div className="col-span-1 p-4">
+    <div className="col-span-1 border-r border-r-neutral-focus p-4">
       <input
         type="text"
         placeholder="Add topic"
@@ -59,11 +59,15 @@ const Topics = () => {
       />
 
       <ul className="mt-6 flex flex-wrap gap-2">
-        {loadingTopics && <Spinner />}
-        {allTopics?.map((topic) => (
-          <Topic key={topic.id} name={topic.title} id={topic.id} />
-        ))}
-        {/* <li className="btn-secondary btn rounded">Hello world</li> */}
+        {loadingTopics ? (
+          <Spinner />
+        ) : allTopics && allTopics?.length > 0 ? (
+          allTopics?.map((topic) => (
+            <Topic key={topic.id} name={topic.title} id={topic.id} />
+          ))
+        ) : (
+          <li>Create your first topic !</li>
+        )}
       </ul>
     </div>
   );
