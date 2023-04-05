@@ -1,11 +1,18 @@
 import { useSession } from "next-auth/react";
-import { KeyboardEvent } from "react";
+import { KeyboardEvent, useEffect, useMemo } from "react";
+import {
+  SET_TOPIC,
+  useSelectedTopic,
+  useTopicDispatcher,
+} from "~/context/TopicContext";
 import { api } from "~/utils/api";
 import Spinner from "../Spinner";
 import Topic from "./Topic";
 
 const Topics = () => {
   const { data: sessionData } = useSession();
+  const selectedTopic = useSelectedTopic();
+  const topicDispatcher = useTopicDispatcher();
 
   const {
     data: allTopics,
@@ -23,16 +30,24 @@ const Topics = () => {
   });
 
   const handleAddTopic = (topicName: string) => {
-    createTopic.mutate({ title: topicName });
+    return createTopic.mutate({ title: topicName });
+    // you can use [mutateSync] instead of [mutate] to handle async operations
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const input = e.target as HTMLInputElement;
-      handleAddTopic(input.value); // wanna wait until it's done
-      input.value = ""; // this should clear after mutation is complete
+      handleAddTopic(input.value);
+      input.value = "";
     }
   };
+
+  useEffect(() => {
+    if (!loadingTopics && allTopics?.length && !selectedTopic.id) {
+      topicDispatcher &&
+        topicDispatcher({ type: SET_TOPIC, payload: allTopics[0]! });
+    }
+  }, [allTopics, loadingTopics]); // initialize default selected topic
 
   return (
     <div className="col-span-1 p-4">
@@ -46,7 +61,7 @@ const Topics = () => {
       <ul className="mt-6 flex flex-wrap gap-2">
         {loadingTopics && <Spinner />}
         {allTopics?.map((topic) => (
-          <Topic key={topic.id} name={topic.title} />
+          <Topic key={topic.id} name={topic.title} id={topic.id} />
         ))}
         {/* <li className="btn-secondary btn rounded">Hello world</li> */}
       </ul>

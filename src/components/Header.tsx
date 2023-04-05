@@ -19,7 +19,7 @@ export const Header = () => {
           <div className="form-control">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search Notes"
               className="input-bordered input"
             />
           </div>
@@ -57,7 +57,7 @@ export const Header = () => {
             </div>
           ) : (
             <button
-              className="btn-accent btn-active btn bg-neutral"
+              className="btn-secondary btn rounded bg-base-200 hover:bg-neutral-focus"
               onClick={() => signIn()}
             >
               Sign In
