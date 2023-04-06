@@ -1,6 +1,8 @@
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { Header } from "~/components/Header";
 import MarkdownContent from "~/components/MarkdownContent";
 import Spinner from "~/components/Spinner";
@@ -8,14 +10,21 @@ import { api } from "~/utils/api";
 import { formatDate } from "~/utils/formatDate";
 
 const NoteDetail = () => {
-  const { query } = useRouter();
+  const router = useRouter();
+  const { data: sessionData, status } = useSession();
 
   const { data: note, isLoading: loadingNote } = api.note.getNote.useQuery({
-    noteId: (query.noteId as string) ?? "",
+    noteId: (router.query.noteId as string) ?? "",
   });
 
+  useEffect(() => {
+    if (status !== "loading" && !sessionData) {
+      router.push("/");
+    }
+  }, [sessionData]);
+
   const meta = {
-    title: !note ? "Note Taker" : `${query.topicName} | ${note?.title}`,
+    title: !note ? "Note Taker" : `${router.query.topicName} | ${note?.title}`,
   };
 
   return (
