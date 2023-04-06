@@ -3,9 +3,10 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 
 import { api } from "~/utils/api";
+import TopicContextProvider from "~/context/TopicContext";
 
 import "~/styles/globals.css";
-import TopicContextProvider from "~/context/TopicContext";
+import "~/styles/prism.css";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
