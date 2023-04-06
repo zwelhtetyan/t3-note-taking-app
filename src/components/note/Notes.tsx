@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { useSelectedTopic } from "~/context/TopicContext";
+import { api } from "~/utils/api";
+import Spinner from "../Spinner";
+import NoteCard from "./NoteCard";
 
 const CreateFirstNote = () => (
   <div className="mt-60  flex flex-col items-center">
@@ -10,9 +14,28 @@ const CreateFirstNote = () => (
 );
 
 const Notes = () => {
+  const selectedTopic = useSelectedTopic();
+
+  console.log(selectedTopic.id);
+
+  const { data: notes, isLoading: loadingNotes } =
+    api.note.getNotesByTopic.useQuery({ topicId: selectedTopic.id! });
+
+  console.log(notes);
+
   return (
     <div className="col-span-2 p-4">
-      {false ? <p>show all notes for selected topic</p> : <CreateFirstNote />}
+      {loadingNotes && <Spinner />}
+
+      {!loadingNotes && notes && notes.length > 0 && (
+        <div className="grid grid-cols-2 gap-4">
+          {notes.map((note) => (
+            <NoteCard key={note.id} {...note} />
+          ))}
+        </div>
+      )}
+
+      {!loadingNotes && notes && notes.length === 0 && <CreateFirstNote />}
     </div>
   );
 };

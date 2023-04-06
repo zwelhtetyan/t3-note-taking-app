@@ -7,7 +7,7 @@ export const noteRouter = createTRPCRouter({
   }),
 
   getNotesByTopic: protectedProcedure
-    .input(z.object({ topicId: z.string().min(1) }))
+    .input(z.object({ topicId: z.string() }))
     .query(({ ctx, input: { topicId } }) => {
       return ctx.prisma.note.findMany({
         where: { topicId },

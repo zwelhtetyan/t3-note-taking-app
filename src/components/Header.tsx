@@ -47,7 +47,7 @@ export const Header = () => {
 
                 <ul
                   tabIndex={0}
-                  className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-accent p-2 shadow"
+                  className="dropdown-content menu menu-compact mt-3 w-52 rounded border border-gray-500 bg-accent p-2 shadow"
                 >
                   <li>
                     <a className="justify-between">

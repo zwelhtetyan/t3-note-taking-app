@@ -11,8 +11,8 @@
   h6 {
     margin-top: 0 !important;
   }
-}
 
-.mdx-content img {
-  @apply rounded;
+  .mdx-content img {
+    @apply rounded;
+  }
 }
