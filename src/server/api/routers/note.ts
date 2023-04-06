@@ -14,6 +14,12 @@ export const noteRouter = createTRPCRouter({
       });
     }),
 
+  getNote: protectedProcedure
+    .input(z.object({ noteId: z.string() }))
+    .query(({ ctx, input: { noteId } }) => {
+      return ctx.prisma.note.findUnique({ where: { id: noteId } });
+    }),
+
   create: protectedProcedure
     .input(
       z.object({

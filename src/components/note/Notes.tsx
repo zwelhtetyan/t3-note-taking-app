@@ -16,8 +16,6 @@ const CreateFirstNote = () => (
 const Notes = () => {
   const selectedTopic = useSelectedTopic();
 
-  console.log(selectedTopic.id);
-
   const { data: notes, isLoading: loadingNotes } =
     api.note.getNotesByTopic.useQuery({ topicId: selectedTopic.id! });
 
@@ -30,7 +28,13 @@ const Notes = () => {
       {!loadingNotes && notes && notes.length > 0 && (
         <div className="grid grid-cols-2 gap-4">
           {notes.map((note) => (
-            <NoteCard key={note.id} {...note} />
+            <NoteCard
+              key={note.id}
+              id={note.id}
+              title={note.title}
+              createdAt={note.createdAt}
+              selectedTopicName={selectedTopic.title ?? ""}
+            />
           ))}
         </div>
       )}
