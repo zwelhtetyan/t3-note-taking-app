@@ -2,19 +2,58 @@ import ReactCodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { languages } from "@codemirror/language-data";
-import { useState } from "react";
-import MarkdownContent from "./MarkdownContent";
+import { useRef, useState } from "react";
+import MarkdownContent from "../MarkdownContent";
+import { useSession } from "next-auth/react";
+import { api } from "~/utils/api";
+import { useSelectedTopic } from "~/context/TopicContext";
 
-const Notes = () => {
-  const [content, setContent] = useState("## Hello Zwel!");
+export interface NewNote {
+  title: string;
+  content: string;
+  authorId: string;
+  topicId: string;
+}
+
+const NoteEditor = () => {
+  const titleRef = useRef<HTMLInputElement>(null);
+  const [content, setContent] = useState("");
   const [showPreview, setShowPreview] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const { data: sessionData } = useSession();
+  const selectedTopic = useSelectedTopic();
+
+  const createNote = api.note.create.useMutation();
 
   const toggleShowPreview = () => setShowPreview((prev) => !prev);
+
+  const handleCreateNote = async () => {
+    const newNote: NewNote = {
+      title: titleRef.current?.value ?? "",
+      content: content,
+      topicId: selectedTopic.id ?? "",
+      authorId: sessionData?.user.id!,
+    };
+
+    try {
+      setCreating(true);
+      await createNote.mutateAsync({ ...newNote });
+      setShowPreview(false);
+    } catch (err) {
+      console.log(err);
+    }
+
+    setCreating(false);
+
+    titleRef.current!.value = "";
+    setContent("");
+  };
 
   return (
     <div className="col-span-2 p-4">
       <div className="mb-2 flex items-center gap-4">
         <input
+          ref={titleRef}
           type="text"
           placeholder="Add Note Title"
           className="input-bordered input w-full max-w-full flex-1"
@@ -27,7 +66,13 @@ const Notes = () => {
           >
             Preview
           </button>
-          <button className="btn-secondary btn rounded">Create</button>
+          <button
+            disabled={creating}
+            onClick={handleCreateNote}
+            className="btn-secondary btn rounded"
+          >
+            {creating ? "Creating" : "Create"}
+          </button>
         </div>
       </div>
 
@@ -39,6 +84,7 @@ const Notes = () => {
         <ReactCodeMirror
           value={content}
           onChange={setContent}
+          placeholder="### write your content with markdown syntax"
           theme={vscodeDark}
           height="100%"
           extensions={[
@@ -51,7 +97,7 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+export default NoteEditor;
 
 // ## Hi zwel!
 

@@ -9,10 +9,10 @@ export const topicRouter = createTRPCRouter({
   }),
 
   create: protectedProcedure
-    .input(z.object({ title: z.string() }))
-    .mutation(({ ctx, input }) => {
+    .input(z.object({ title: z.string().min(1) }))
+    .mutation(({ ctx, input: { title } }) => {
       return ctx.prisma.topic.create({
-        data: { title: input.title, authorId: ctx.session.user.id },
+        data: { title, authorId: ctx.session.user.id },
       });
     }),
 });

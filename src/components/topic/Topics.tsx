@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
-import { KeyboardEvent, useEffect, useMemo } from "react";
+import { useRouter } from "next/router";
+import { KeyboardEvent, useEffect } from "react";
 import {
   SET_TOPIC,
   useSelectedTopic,
@@ -7,12 +8,16 @@ import {
 } from "~/context/TopicContext";
 import { api } from "~/utils/api";
 import Spinner from "../Spinner";
+
 import Topic from "./Topic";
 
 const Topics = () => {
   const { data: sessionData } = useSession();
   const selectedTopic = useSelectedTopic();
   const topicDispatcher = useTopicDispatcher();
+  const { pathname } = useRouter();
+
+  const isCreatePage = pathname === "/new";
 
   const {
     data: allTopics,
@@ -37,6 +42,11 @@ const Topics = () => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const input = e.target as HTMLInputElement;
+
+      console.log(input.value);
+
+      if (!input.value.trim()) return;
+
       handleAddTopic(input.value);
       input.value = "";
     }
@@ -51,24 +61,28 @@ const Topics = () => {
 
   return (
     <div className="col-span-1 border-r border-r-neutral-focus p-4">
-      <input
-        type="text"
-        placeholder="Create topic"
-        className="input-bordered input w-full max-w-full"
-        onKeyDown={handleKeyDown}
-      />
+      {!isCreatePage && allTopics && allTopics?.length > 0 && (
+        <h1 className="mb-4 text-lg font-bold">Topics</h1>
+      )}
 
-      <ul className="mt-6 flex flex-wrap gap-2">
-        {loadingTopics ? (
-          <Spinner />
-        ) : allTopics && allTopics?.length > 0 ? (
-          allTopics?.map((topic) => (
+      {isCreatePage && (
+        <input
+          type="text"
+          placeholder="Create topic"
+          className="input-bordered input mb-6 w-full max-w-full"
+          onKeyDown={handleKeyDown}
+        />
+      )}
+
+      {loadingTopics && <Spinner />}
+
+      {!loadingTopics && allTopics && allTopics.length > 0 && (
+        <ul className="flex flex-wrap gap-2">
+          {allTopics.map((topic) => (
             <Topic key={topic.id} name={topic.title} id={topic.id} />
-          ))
-        ) : (
-          <li>Create your first topic !</li>
-        )}
-      </ul>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
