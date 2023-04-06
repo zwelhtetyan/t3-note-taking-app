@@ -39,12 +39,12 @@ const Notes = () => {
         <ReactCodeMirror
           value={content}
           onChange={setContent}
-          height="500px"
           theme={vscodeDark}
+          height="100%"
           extensions={[
             markdown({ base: markdownLanguage, codeLanguages: languages }),
           ]}
-          className="w-full max-w-full"
+          className="h-[calc(100vh-154px)] w-full max-w-full"
         />
       )}
     </div>
