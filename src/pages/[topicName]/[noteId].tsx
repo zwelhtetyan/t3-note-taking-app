@@ -43,7 +43,7 @@ const NoteDetail = () => {
             <div>
               <Link
                 href="/"
-                className="mb-8 block text-gray-300 underline hover:text-gray-400"
+                className="mb-8 inline-block text-gray-300 underline hover:text-gray-400"
               >
                 Go back
               </Link>
