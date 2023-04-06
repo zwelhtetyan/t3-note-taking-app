@@ -19,8 +19,6 @@ const Notes = () => {
   const { data: notes, isLoading: loadingNotes } =
     api.note.getNotesByTopic.useQuery({ topicId: selectedTopic.id! });
 
-  console.log(notes);
-
   return (
     <div className="col-span-2 p-4">
       {loadingNotes && <Spinner />}
