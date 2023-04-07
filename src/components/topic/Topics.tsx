@@ -18,21 +18,19 @@ const Topics = () => {
   const topicDispatcher = useTopicDispatcher();
   const { pathname } = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const utils = api.useContext();
 
   const isCreatePage = pathname === "/new";
 
-  const {
-    data: allTopics,
-    isLoading: loadingTopics,
-    refetch: refetchTopics,
-  } = api.topic.getAll.useQuery(
-    undefined, // not input
-    { enabled: sessionData?.user !== undefined }
-  );
+  const { data: allTopics, isLoading: loadingTopics } =
+    api.topic.getAll.useQuery(
+      undefined, // not input
+      { enabled: sessionData?.user !== undefined }
+    );
 
   const createTopic = api.topic.create.useMutation({
     onSuccess: () => {
-      refetchTopics();
+      utils.topic.getAll.invalidate();
     },
   });
 
@@ -54,10 +52,7 @@ const Topics = () => {
     }
   };
 
-  console.log(loadingTopics);
-
   useEffect(() => {
-    console.log("inside useEffect");
     if (!loadingTopics && allTopics?.length && !selectedTopic.id) {
       topicDispatcher &&
         topicDispatcher({ type: SET_TOPIC, payload: allTopics[0]! });
@@ -99,7 +94,6 @@ const Topics = () => {
           topicName={selectedTopic.title!}
           topicId={selectedTopic.id!}
           setShowDeleteModal={setShowDeleteModal}
-          refetchTopics={refetchTopics}
         />
       )}
     </div>

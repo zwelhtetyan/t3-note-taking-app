@@ -6,24 +6,23 @@ interface DeleteTopicModalProps {
   topicName: string;
   topicId: string;
   setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
-  refetchTopics: any;
 }
 
 const DeleteTopicModal = ({
   topicName,
   topicId,
   setShowDeleteModal,
-  refetchTopics,
 }: DeleteTopicModalProps) => {
   const topicDispatcher = useTopicDispatcher();
   const [deletingTopic, setDeletingTopic] = useState(false);
+  const utils = api.useContext();
 
   const deleteTopic = api.topic.delete.useMutation({
     onSuccess: () => {
       topicDispatcher &&
         topicDispatcher({ type: SET_TOPIC, payload: { id: "", title: "" } });
 
-      refetchTopics();
+      utils.topic.getAll.invalidate();
     },
   });
 
