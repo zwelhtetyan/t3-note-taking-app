@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 import {
   SET_TOPIC,
   useSelectedTopic,
@@ -8,9 +8,10 @@ import {
 interface TopicProps {
   name: string;
   id: string;
+  setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const Topic = ({ name, id }: TopicProps) => {
+const Topic = ({ name, id, setShowDeleteModal }: TopicProps) => {
   const selectedTopic = useSelectedTopic();
   const topicDispatcher = useTopicDispatcher();
 
@@ -21,9 +22,14 @@ const Topic = ({ name, id }: TopicProps) => {
       topicDispatcher({ type: SET_TOPIC, payload: { id, title: name } });
   };
 
+  const handleDoubleClick = () => {
+    selectedTopic && setShowDeleteModal(true);
+  };
+
   return (
     <li
       onClick={handleSelectTopic}
+      onDoubleClick={handleDoubleClick}
       className={`btn-secondary btn rounded bg-base-200 ${
         isActive ? "bg-neutral-focus" : ""
       }`}

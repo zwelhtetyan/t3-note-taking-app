@@ -1,12 +1,13 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { KeyboardEvent, useEffect } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import {
   SET_TOPIC,
   useSelectedTopic,
   useTopicDispatcher,
 } from "~/context/TopicContext";
 import { api } from "~/utils/api";
+import DeleteTopicModal from "../modal/DeleteTopicModal";
 import Spinner from "../Spinner";
 
 import Topic from "./Topic";
@@ -16,6 +17,7 @@ const Topics = () => {
   const selectedTopic = useSelectedTopic();
   const topicDispatcher = useTopicDispatcher();
   const { pathname } = useRouter();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const isCreatePage = pathname === "/new";
 
@@ -52,7 +54,10 @@ const Topics = () => {
     }
   };
 
+  console.log(loadingTopics);
+
   useEffect(() => {
+    console.log("inside useEffect");
     if (!loadingTopics && allTopics?.length && !selectedTopic.id) {
       topicDispatcher &&
         topicDispatcher({ type: SET_TOPIC, payload: allTopics[0]! });
@@ -79,9 +84,23 @@ const Topics = () => {
       {!loadingTopics && allTopics && allTopics.length > 0 && (
         <ul className="flex flex-wrap gap-2">
           {allTopics.map((topic) => (
-            <Topic key={topic.id} name={topic.title} id={topic.id} />
+            <Topic
+              key={topic.id}
+              name={topic.title}
+              id={topic.id}
+              setShowDeleteModal={setShowDeleteModal}
+            />
           ))}
         </ul>
+      )}
+
+      {showDeleteModal && selectedTopic && (
+        <DeleteTopicModal
+          topicName={selectedTopic.title!}
+          topicId={selectedTopic.id!}
+          setShowDeleteModal={setShowDeleteModal}
+          refetchTopics={refetchTopics}
+        />
       )}
     </div>
   );

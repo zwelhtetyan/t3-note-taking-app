@@ -15,4 +15,10 @@ export const topicRouter = createTRPCRouter({
         data: { title, authorId: ctx.session.user.id },
       });
     }),
+
+  delete: protectedProcedure
+    .input(z.object({ topicId: z.string().min(1) }))
+    .mutation(({ ctx, input: { topicId } }) => {
+      return ctx.prisma.topic.delete({ where: { id: topicId } });
+    }),
 });

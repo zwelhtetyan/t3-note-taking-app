@@ -4,7 +4,7 @@ import { ChildrenProp } from "~/types";
 
 type TopicDispatcherType = React.Dispatch<TopicReducerAction>;
 
-const initialTopicState = { id: "", title: "", userId: "" };
+const initialTopicState = { id: "", title: "" };
 
 const TopicContext = createContext<Partial<Topic>>(initialTopicState);
 const TopicDispatcher = createContext<TopicDispatcherType | null>(null);
