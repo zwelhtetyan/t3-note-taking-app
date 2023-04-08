@@ -61,8 +61,8 @@ const Topics = () => {
     <div className="col-span-1 border-r border-r-neutral-focus p-4">
       {!isCreatePage && allTopics && allTopics?.length > 0 && (
         <>
-          <h1 className="mb-1 text-lg font-bold">Topics</h1>
-          <p className="mb-4 text-xs text-red-500">
+          <h1 className="mb-1 text-xl font-bold">Topics</h1>
+          <p className="mb-4 text-sm text-gray-400">
             Double click on topic you wanna delete.
           </p>
         </>

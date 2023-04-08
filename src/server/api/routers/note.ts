@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
@@ -16,8 +17,17 @@ export const noteRouter = createTRPCRouter({
 
   getNote: protectedProcedure
     .input(z.object({ noteId: z.string() }))
-    .query(({ ctx, input: { noteId } }) => {
-      return ctx.prisma.note.findUnique({ where: { id: noteId } });
+    .query(async ({ ctx, input: { noteId } }) => {
+      const note = await ctx.prisma.note.findUnique({ where: { id: noteId } });
+
+      if (note?.authorId === ctx.session.user.id) {
+        return note;
+      } else {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You can only get you own note",
+        });
+      }
     }),
 
   create: protectedProcedure
@@ -35,5 +45,13 @@ export const noteRouter = createTRPCRouter({
       return ctx.prisma.note.create({
         data: { title, content, topicId, authorId },
       });
+    }),
+
+  delete: protectedProcedure
+    .input(
+      z.object({ noteId: z.string().nonempty({ message: "invalid noteId" }) })
+    )
+    .mutation(({ ctx, input: { noteId } }) => {
+      return ctx.prisma.note.delete({ where: { id: noteId } });
     }),
 });

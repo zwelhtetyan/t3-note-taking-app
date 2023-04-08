@@ -15,7 +15,7 @@ export const Header = () => {
         <div className="flex-1">
           <Link href="/" className="text-xl font-bold normal-case">
             {sessionData?.user
-              ? `Note for ${sessionData.user.name}`
+              ? `📝 Note for ${sessionData.user.name}`
               : "Note Taker 📝"}
           </Link>
         </div>

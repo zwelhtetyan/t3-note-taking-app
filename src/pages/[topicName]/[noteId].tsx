@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "~/components/Header";
 import MarkdownContent from "~/components/MarkdownContent";
 import Spinner from "~/components/Spinner";
@@ -12,10 +12,41 @@ import { formatDate } from "~/utils/formatDate";
 const NoteDetail = () => {
   const router = useRouter();
   const { data: sessionData, status } = useSession();
+  const [deletingNote, setDeletingNote] = useState(false);
 
-  const { data: note, isLoading: loadingNote } = api.note.getNote.useQuery({
-    noteId: (router.query.noteId as string) ?? "",
-  });
+  const { data: note, isLoading: loadingNote } = api.note.getNote.useQuery(
+    {
+      noteId: (router.query.noteId as string) ?? "",
+    },
+    {
+      enabled: sessionData?.user !== undefined,
+      onError: (err) => {
+        if (err.data?.httpStatus === 403) {
+          router.push("/");
+        }
+      },
+    }
+  );
+
+  const deleteNote = api.note.delete.useMutation();
+
+  const handleDeleteNote = async (noteId: string) => {
+    try {
+      setDeletingNote(true);
+      await deleteNote.mutateAsync({ noteId });
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+    }
+
+    setDeletingNote(false);
+  };
+
+  useEffect(() => {
+    if (note === null) {
+      router.push("/");
+    }
+  }, [note]);
 
   useEffect(() => {
     if (status !== "loading" && !sessionData) {
@@ -41,12 +72,26 @@ const NoteDetail = () => {
           {loadingNote && <Spinner />}
           {!loadingNote && note && (
             <div>
-              <Link
-                href="/"
-                className="mb-8 inline-block text-gray-300 underline hover:text-gray-400"
-              >
-                Go back
-              </Link>
+              <div className="mb-8 flex items-center justify-between">
+                <Link
+                  href="/"
+                  className="inline-block text-gray-300 underline hover:text-gray-400"
+                >
+                  Go back
+                </Link>
+
+                <div className="flex items-center space-x-4">
+                  <button className="text-gray-300 underline hover:text-gray-400">
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteNote(note.id)}
+                    className="text-gray-300 underline hover:text-gray-400"
+                  >
+                    {deletingNote ? "Deleting" : "Delete"}
+                  </button>
+                </div>
+              </div>
 
               <h1 className="mb-2 text-2xl font-bold">{note.title}</h1>
 
@@ -66,3 +111,5 @@ const NoteDetail = () => {
 };
 
 export default NoteDetail;
+
+// http://localhost:3000/zwel/clg84ing50001dm5wlr8ugt76
