@@ -9,7 +9,7 @@ export const topicRouter = createTRPCRouter({
   }),
 
   create: protectedProcedure
-    .input(z.object({ title: z.string().min(1) }))
+    .input(z.object({ title: z.string().nonempty() }))
     .mutation(({ ctx, input: { title } }) => {
       return ctx.prisma.topic.create({
         data: { title, authorId: ctx.session.user.id },
@@ -17,7 +17,7 @@ export const topicRouter = createTRPCRouter({
     }),
 
   delete: protectedProcedure
-    .input(z.object({ topicId: z.string().min(1) }))
+    .input(z.object({ topicId: z.string().nonempty() }))
     .mutation(({ ctx, input: { topicId } }) => {
       return ctx.prisma.topic.delete({ where: { id: topicId } });
     }),

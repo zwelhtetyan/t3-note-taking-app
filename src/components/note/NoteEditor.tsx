@@ -7,6 +7,7 @@ import MarkdownContent from "../MarkdownContent";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { useSelectedTopic } from "~/context/TopicContext";
+import { toast, Toaster } from "react-hot-toast";
 
 export interface NewNote {
   title: string;
@@ -38,19 +39,26 @@ const NoteEditor = () => {
     try {
       setCreating(true);
       await createNote.mutateAsync({ ...newNote });
+
+      toast.success("note created successfully");
+      titleRef.current!.value = "";
       setShowPreview(false);
-    } catch (err) {
-      console.log(err);
+      setCreating(false);
+      setContent("");
+    } catch (err: any) {
+      const errObj = err.data?.zodError?.fieldErrors;
+
+      if (errObj?.topicId) toast.error(errObj.topicId[0]);
+      else if (errObj?.title) toast.error(errObj.title[0]);
+      else if (errObj?.content) toast.error(errObj.content[0]);
+
+      setCreating(false);
     }
-
-    setCreating(false);
-
-    titleRef.current!.value = "";
-    setContent("");
   };
 
   return (
     <div className="col-span-2 p-4">
+      <Toaster reverseOrder={true} />
       <div className="mb-2 flex items-center gap-4">
         <input
           ref={titleRef}
@@ -69,7 +77,7 @@ const NoteEditor = () => {
           <button
             disabled={creating}
             onClick={handleCreateNote}
-            className="btn-secondary btn rounded"
+            className="z btn-secondary btn rounded"
           >
             {creating ? "Creating" : "Create"}
           </button>

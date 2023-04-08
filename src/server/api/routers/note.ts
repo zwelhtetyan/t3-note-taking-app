@@ -23,10 +23,12 @@ export const noteRouter = createTRPCRouter({
   create: protectedProcedure
     .input(
       z.object({
-        title: z.string().min(1),
-        content: z.string().min(1),
-        topicId: z.string().min(1),
-        authorId: z.string().min(1),
+        title: z.string().nonempty({ message: "title is required" }),
+        content: z.string().nonempty({ message: "content is required" }),
+        topicId: z
+          .string()
+          .nonempty({ message: "please create a topic first" }),
+        authorId: z.string().nonempty(),
       })
     )
     .mutation(({ ctx, input: { title, content, topicId, authorId } }) => {

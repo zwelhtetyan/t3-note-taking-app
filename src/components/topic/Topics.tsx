@@ -43,8 +43,6 @@ const Topics = () => {
     if (e.key === "Enter") {
       const input = e.target as HTMLInputElement;
 
-      console.log(input.value);
-
       if (!input.value.trim()) return;
 
       handleAddTopic(input.value);
@@ -62,7 +60,12 @@ const Topics = () => {
   return (
     <div className="col-span-1 border-r border-r-neutral-focus p-4">
       {!isCreatePage && allTopics && allTopics?.length > 0 && (
-        <h1 className="mb-4 text-lg font-bold">Topics</h1>
+        <>
+          <h1 className="mb-1 text-lg font-bold">Topics</h1>
+          <p className="mb-4 text-xs text-red-500">
+            Double click on topic you wanna delete.
+          </p>
+        </>
       )}
 
       {isCreatePage && (
