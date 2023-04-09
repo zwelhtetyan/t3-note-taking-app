@@ -8,6 +8,9 @@ export const Header = () => {
   const { pathname } = useRouter();
 
   const isCreatePage = pathname === "/new";
+  const isEditPage = pathname.split("/")[3] === "edit";
+
+  const showSearchBar = !isCreatePage && !isEditPage;
 
   return (
     <div className="navbar bg-accent">
@@ -23,7 +26,7 @@ export const Header = () => {
         <div className="flex gap-2">
           {sessionData?.user ? (
             <>
-              {!isCreatePage && (
+              {showSearchBar && (
                 <div className="form-control">
                   <input
                     type="text"

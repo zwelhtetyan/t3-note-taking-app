@@ -5,8 +5,17 @@ export const topicRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.topic.findMany({
       where: { authorId: ctx.session.user.id },
+      orderBy: { createdAt: "desc" },
     });
   }),
+
+  getTopic: protectedProcedure
+    .input(z.object({ topicName: z.string() }))
+    .query(({ ctx, input: { topicName } }) => {
+      return ctx.prisma.topic.findFirstOrThrow({
+        where: { authorId: ctx.session.user.id, title: topicName },
+      });
+    }),
 
   create: protectedProcedure
     .input(z.object({ title: z.string().nonempty() }))

@@ -8,6 +8,8 @@ import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { useSelectedTopic } from "~/context/TopicContext";
 import { toast, Toaster } from "react-hot-toast";
+import { Note } from "@prisma/client";
+import { useRouter } from "next/router";
 
 export interface NewNote {
   title: string;
@@ -16,19 +18,26 @@ export interface NewNote {
   topicId: string;
 }
 
-const NoteEditor = () => {
+interface NoteEditorProps {
+  editMode?: boolean;
+  noteToEdit?: Note;
+}
+
+const NoteEditor = ({ editMode, noteToEdit }: NoteEditorProps) => {
   const titleRef = useRef<HTMLInputElement>(null);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(noteToEdit ? noteToEdit.content : "");
   const [showPreview, setShowPreview] = useState(false);
-  const [creating, setCreating] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const { data: sessionData } = useSession();
   const selectedTopic = useSelectedTopic();
+  const router = useRouter();
 
   const createNote = api.note.create.useMutation();
+  const editNote = api.note.update.useMutation();
 
   const toggleShowPreview = () => setShowPreview((prev) => !prev);
 
-  const handleCreateNote = async () => {
+  const handleSubmit = async () => {
     const newNote: NewNote = {
       title: titleRef.current?.value ?? "",
       content: content,
@@ -37,14 +46,22 @@ const NoteEditor = () => {
     };
 
     try {
-      setCreating(true);
-      await createNote.mutateAsync({ ...newNote });
+      setSubmitting(true);
+
+      editMode && noteToEdit
+        ? await editNote.mutateAsync({
+            noteId: noteToEdit.id,
+            title: newNote.title,
+            content,
+          })
+        : await createNote.mutateAsync({ ...newNote });
 
       toast.success("note created successfully");
       titleRef.current!.value = "";
       setShowPreview(false);
-      setCreating(false);
+      setSubmitting(false);
       setContent("");
+      editMode && router.back();
     } catch (err: any) {
       const errObj = err.data?.zodError?.fieldErrors;
 
@@ -52,7 +69,7 @@ const NoteEditor = () => {
       else if (errObj?.title) toast.error(errObj.title[0]);
       else if (errObj?.content) toast.error(errObj.content[0]);
 
-      setCreating(false);
+      setSubmitting(false);
     }
   };
 
@@ -63,6 +80,7 @@ const NoteEditor = () => {
         <input
           ref={titleRef}
           type="text"
+          defaultValue={noteToEdit?.title ?? ""}
           placeholder="Add Note Title"
           className="input-bordered input w-full max-w-full flex-1"
         />
@@ -70,16 +88,22 @@ const NoteEditor = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={toggleShowPreview}
-            className="btn-secondary btn rounded"
+            className="btn-secondary btn rounded capitalize"
           >
             Preview
           </button>
           <button
-            disabled={creating}
-            onClick={handleCreateNote}
-            className="z btn-secondary btn rounded"
+            disabled={submitting}
+            onClick={handleSubmit}
+            className="z btn-secondary btn rounded capitalize"
           >
-            {creating ? "Creating" : "Create"}
+            {submitting
+              ? editMode
+                ? "Updating"
+                : "Creating"
+              : editMode
+              ? "Update"
+              : "Create"}
           </button>
         </div>
       </div>

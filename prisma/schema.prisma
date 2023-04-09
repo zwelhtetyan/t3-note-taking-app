@@ -66,6 +66,8 @@ model Topic {
     user      User     @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     authorId    String
     notes     Note[]
+
+    @@unique([title, authorId])
 }
 
 model Note {

@@ -48,7 +48,10 @@ const DeleteTopicModal = ({
           Topic Name:{" "}
           <span className="font-bold capitalize italic">"{topicName}"</span>
         </h2>
-        <p className="py-4">Are you sure you want to delete this topic?</p>
+        <p className="py-4">
+          All related posts with that topic will also be deleted. Are you sure
+          you want to delete this topic?
+        </p>
 
         <div className="flex w-full justify-end space-x-2 ">
           <button

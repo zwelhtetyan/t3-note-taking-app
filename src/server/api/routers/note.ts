@@ -16,16 +16,22 @@ export const noteRouter = createTRPCRouter({
     }),
 
   getNote: protectedProcedure
-    .input(z.object({ noteId: z.string() }))
-    .query(async ({ ctx, input: { noteId } }) => {
-      const note = await ctx.prisma.note.findUnique({ where: { id: noteId } });
+    .input(z.object({ noteId: z.string(), topicName: z.string() }))
+    .query(async ({ ctx, input: { noteId, topicName } }) => {
+      const note: any = await ctx.prisma.note.findUnique({
+        where: { id: noteId },
+        include: { topic: true },
+      });
 
-      if (note?.authorId === ctx.session.user.id) {
+      if (
+        note?.authorId === ctx.session.user.id &&
+        topicName === note?.topic.title
+      ) {
         return note;
       } else {
         throw new TRPCError({
           code: "FORBIDDEN",
-          message: "You can only get you own note",
+          message: "No note found!. You can only get you own note",
         });
       }
     }),
@@ -44,6 +50,21 @@ export const noteRouter = createTRPCRouter({
     .mutation(({ ctx, input: { title, content, topicId, authorId } }) => {
       return ctx.prisma.note.create({
         data: { title, content, topicId, authorId },
+      });
+    }),
+
+  update: protectedProcedure
+    .input(
+      z.object({
+        title: z.string().nonempty({ message: "title is required" }),
+        content: z.string().nonempty({ message: "content is required" }),
+        noteId: z.string().nonempty({ message: "Invalid noteId" }),
+      })
+    )
+    .mutation(({ ctx, input: { title, content, noteId } }) => {
+      return ctx.prisma.note.update({
+        where: { id: noteId },
+        data: { title, content },
       });
     }),
 

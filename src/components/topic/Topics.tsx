@@ -16,11 +16,14 @@ const Topics = () => {
   const { data: sessionData } = useSession();
   const selectedTopic = useSelectedTopic();
   const topicDispatcher = useTopicDispatcher();
-  const { pathname } = useRouter();
+  const router = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const utils = api.useContext();
 
-  const isCreatePage = pathname === "/new";
+  const isCreatePage = router.pathname === "/new";
+  const isEditPage = router.pathname.split("/")[3] === "edit";
+
+  const showTopicTitle = !isCreatePage && !isEditPage;
 
   const { data: allTopics, isLoading: loadingTopics } =
     api.topic.getAll.useQuery(
@@ -59,7 +62,7 @@ const Topics = () => {
 
   return (
     <div className="col-span-1 border-r border-r-neutral-focus p-4">
-      {!isCreatePage && allTopics && allTopics?.length > 0 && (
+      {showTopicTitle && allTopics && allTopics?.length > 0 && (
         <>
           <h1 className="mb-1 text-xl font-bold">Topics</h1>
           <p className="mb-4 text-sm text-gray-400">

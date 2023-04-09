@@ -11,15 +11,20 @@ import { formatDate } from "~/utils/formatDate";
 
 const NoteDetail = () => {
   const router = useRouter();
+  const { query } = router;
   const { data: sessionData, status } = useSession();
   const [deletingNote, setDeletingNote] = useState(false);
 
   const { data: note, isLoading: loadingNote } = api.note.getNote.useQuery(
     {
-      noteId: (router.query.noteId as string) ?? "",
+      noteId: router.query.noteId as string,
+      topicName: router.query.topicName as string,
     },
     {
-      enabled: sessionData?.user !== undefined,
+      enabled:
+        sessionData?.user !== undefined &&
+        query.noteId !== undefined &&
+        query.topicName !== undefined,
       onError: (err) => {
         if (err.data?.httpStatus === 403) {
           router.push("/");
@@ -81,7 +86,14 @@ const NoteDetail = () => {
                 </Link>
 
                 <div className="flex items-center space-x-4">
-                  <button className="text-gray-300 underline hover:text-gray-400">
+                  <button
+                    onClick={() =>
+                      router.push(
+                        `/${router.query.topicName}/${router.query.noteId}/edit`
+                      )
+                    }
+                    className="text-gray-300 underline hover:text-gray-400"
+                  >
                     Edit
                   </button>
                   <button
@@ -111,5 +123,3 @@ const NoteDetail = () => {
 };
 
 export default NoteDetail;
-
-// http://localhost:3000/zwel/clg84ing50001dm5wlr8ugt76
