@@ -2,16 +2,19 @@ import { Topic } from "@prisma/client";
 import React, { createContext, useContext, useReducer } from "react";
 import { ChildrenProp } from "~/types";
 
-type TopicDispatcherType = React.Dispatch<TopicReducerAction>;
+interface CTXProps {
+  state: Partial<Topic>;
+  dispatch: React.Dispatch<TopicReducerAction>;
+}
 
 const initialTopicState = { id: "", title: "" };
 
-const TopicContext = createContext<Partial<Topic>>(initialTopicState);
-const TopicDispatcher = createContext<TopicDispatcherType | null>(null);
-export const SET_TOPIC = "SET_TOPIC";
+const TopicContext = createContext<CTXProps>({
+  state: initialTopicState,
+  dispatch: () => {},
+});
 
-// try using useReducer
-// delete props drilling
+export const SET_TOPIC = "SET_TOPIC";
 
 interface TopicReducerAction {
   type: string;
@@ -31,10 +34,8 @@ const TopicContextProvider = ({ children }: ChildrenProp) => {
   const [state, dispatch] = useReducer(topicReducer, initialTopicState);
 
   return (
-    <TopicContext.Provider value={state}>
-      <TopicDispatcher.Provider value={dispatch}>
-        {children}
-      </TopicDispatcher.Provider>
+    <TopicContext.Provider value={{ state, dispatch }}>
+      {children}
     </TopicContext.Provider>
   );
 };
@@ -42,4 +43,3 @@ const TopicContextProvider = ({ children }: ChildrenProp) => {
 export default TopicContextProvider;
 
 export const useSelectedTopic = () => useContext(TopicContext);
-export const useTopicDispatcher = () => useContext(TopicDispatcher);

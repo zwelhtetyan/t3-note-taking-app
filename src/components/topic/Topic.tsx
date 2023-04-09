@@ -1,9 +1,5 @@
 import { Dispatch, SetStateAction, useMemo } from "react";
-import {
-  SET_TOPIC,
-  useSelectedTopic,
-  useTopicDispatcher,
-} from "~/context/TopicContext";
+import { SET_TOPIC, useSelectedTopic } from "~/context/TopicContext";
 
 interface TopicProps {
   name: string;
@@ -12,8 +8,8 @@ interface TopicProps {
 }
 
 const Topic = ({ name, id, setShowDeleteModal }: TopicProps) => {
-  const selectedTopic = useSelectedTopic();
-  const topicDispatcher = useTopicDispatcher();
+  const { state: selectedTopic, dispatch: topicDispatcher } =
+    useSelectedTopic();
 
   const isActive = useMemo(() => id === selectedTopic.id, [selectedTopic.id]);
 

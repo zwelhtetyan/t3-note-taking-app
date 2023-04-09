@@ -36,8 +36,6 @@ const Edit = () => {
     }
   }, [loadingTopic, loadingNote]);
 
-  console.log({ topic, note });
-
   return (
     <>
       <Head>

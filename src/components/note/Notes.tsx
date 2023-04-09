@@ -14,7 +14,7 @@ const CreateFirstNote = () => (
 );
 
 const Notes = () => {
-  const selectedTopic = useSelectedTopic();
+  const { state: selectedTopic } = useSelectedTopic();
 
   const { data: notes, isLoading: loadingNotes } =
     api.note.getNotesByTopic.useQuery({ topicId: selectedTopic.id! });

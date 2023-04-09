@@ -3,9 +3,18 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const noteRouter = createTRPCRouter({
-  getAll: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.note.findMany();
-  }),
+  getNotesByRelevantTitle: protectedProcedure
+    .input(z.object({ searchTerm: z.string() }))
+    .query(({ ctx, input: { searchTerm } }) => {
+      if (searchTerm.trim().length) {
+        return ctx.prisma.note.findMany({
+          where: {
+            authorId: ctx.session.user.id,
+            title: { search: searchTerm, mode: "insensitive" },
+          },
+        });
+      }
+    }),
 
   getNotesByTopic: protectedProcedure
     .input(z.object({ topicId: z.string() }))

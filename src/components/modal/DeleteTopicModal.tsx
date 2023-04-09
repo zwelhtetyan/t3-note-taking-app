@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { SET_TOPIC, useTopicDispatcher } from "~/context/TopicContext";
+import { SET_TOPIC, useSelectedTopic } from "~/context/TopicContext";
 import { api } from "~/utils/api";
 
 interface DeleteTopicModalProps {
@@ -13,7 +13,7 @@ const DeleteTopicModal = ({
   topicId,
   setShowDeleteModal,
 }: DeleteTopicModalProps) => {
-  const topicDispatcher = useTopicDispatcher();
+  const { dispatch: topicDispatcher } = useSelectedTopic();
   const [deletingTopic, setDeletingTopic] = useState(false);
   const utils = api.useContext();
 

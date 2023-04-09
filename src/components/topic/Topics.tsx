@@ -1,11 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { KeyboardEvent, useEffect, useState } from "react";
-import {
-  SET_TOPIC,
-  useSelectedTopic,
-  useTopicDispatcher,
-} from "~/context/TopicContext";
+import { SET_TOPIC, useSelectedTopic } from "~/context/TopicContext";
 import { api } from "~/utils/api";
 import DeleteTopicModal from "../modal/DeleteTopicModal";
 import Spinner from "../Spinner";
@@ -14,8 +10,8 @@ import Topic from "./Topic";
 
 const Topics = () => {
   const { data: sessionData } = useSession();
-  const selectedTopic = useSelectedTopic();
-  const topicDispatcher = useTopicDispatcher();
+  const { state: selectedTopic, dispatch: topicDispatcher } =
+    useSelectedTopic();
   const router = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const utils = api.useContext();

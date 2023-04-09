@@ -2,15 +2,27 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { FormEvent, useRef, useState } from "react";
+import { api } from "~/utils/api";
 
 export const Header = () => {
   const { data: sessionData } = useSession();
-  const { pathname } = useRouter();
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+  const { pathname } = router;
 
   const isCreatePage = pathname === "/new";
   const isEditPage = pathname.split("/")[3] === "edit";
 
   const showSearchBar = !isCreatePage && !isEditPage;
+
+  const handleSearchNote = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const searchTerm = searchInputRef.current?.value.trim();
+
+    router.push(`/search/?q=${searchTerm}`);
+  };
 
   return (
     <div className="navbar bg-accent">
@@ -27,13 +39,14 @@ export const Header = () => {
           {sessionData?.user ? (
             <>
               {showSearchBar && (
-                <div className="form-control">
+                <form className="form-control" onSubmit={handleSearchNote}>
                   <input
+                    ref={searchInputRef}
                     type="text"
                     placeholder="Search Notes"
                     className="input-bordered input"
                   />
-                </div>
+                </form>
               )}
 
               <div className="dropdown-end dropdown">

@@ -29,7 +29,7 @@ const NoteEditor = ({ editMode, noteToEdit }: NoteEditorProps) => {
   const [showPreview, setShowPreview] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const { data: sessionData } = useSession();
-  const selectedTopic = useSelectedTopic();
+  const { state: selectedTopic } = useSelectedTopic();
   const router = useRouter();
 
   const createNote = api.note.create.useMutation();
@@ -56,7 +56,10 @@ const NoteEditor = ({ editMode, noteToEdit }: NoteEditorProps) => {
           })
         : await createNote.mutateAsync({ ...newNote });
 
-      toast.success("note created successfully");
+      editMode
+        ? toast.success("note updated successfully")
+        : toast.success("note created successfully");
+
       titleRef.current!.value = "";
       setShowPreview(false);
       setSubmitting(false);
