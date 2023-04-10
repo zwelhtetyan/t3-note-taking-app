@@ -29,6 +29,7 @@ const NoteDetail = () => {
           router.push("/");
         }
       },
+      retry: false,
     }
   );
 
