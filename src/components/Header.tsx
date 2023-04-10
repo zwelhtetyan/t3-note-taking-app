@@ -41,6 +41,7 @@ export const Header = () => {
               {showSearchBar && (
                 <form className="form-control" onSubmit={handleSearchNote}>
                   <input
+                    defaultValue={router.query.q}
                     ref={searchInputRef}
                     type="text"
                     placeholder="Search Notes"

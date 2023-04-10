@@ -12,6 +12,7 @@ export const noteRouter = createTRPCRouter({
             authorId: ctx.session.user.id,
             title: { search: searchTerm, mode: "insensitive" },
           },
+          include: { topic: true },
         });
       }
     }),
@@ -21,6 +22,7 @@ export const noteRouter = createTRPCRouter({
     .query(({ ctx, input: { topicId } }) => {
       return ctx.prisma.note.findMany({
         where: { topicId },
+        include: { topic: true },
       });
     }),
 

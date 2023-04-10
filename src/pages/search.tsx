@@ -17,8 +17,6 @@ const search = () => {
       }
     );
 
-  console.log(searchedNotes, loadingSearchedNotes);
-
   return (
     <>
       <Head>
@@ -29,7 +27,7 @@ const search = () => {
       <main>
         <Header />
         <Layout>
-          <div className="p-4 ">
+          <div className="col-span-3 grid grid-cols-auto_fill_250 gap-4 p-4">
             {loadingSearchedNotes && <Spinner />}
 
             {!loadingSearchedNotes &&
@@ -41,7 +39,7 @@ const search = () => {
                   id={note.id}
                   title={note.title}
                   createdAt={note.createdAt}
-                  selectedTopicName={""} // need to fix
+                  topicName={note.topic.title}
                 />
               ))}
 

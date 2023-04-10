@@ -31,7 +31,7 @@ const Notes = () => {
               id={note.id}
               title={note.title}
               createdAt={note.createdAt}
-              selectedTopicName={selectedTopic.title ?? ""}
+              topicName={note.topic.title}
             />
           ))}
         </div>

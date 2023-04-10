@@ -1,6 +1,5 @@
 import { useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Header } from "~/components/Header";
@@ -78,12 +77,12 @@ const NoteDetail = () => {
           {!loadingNote && note && (
             <div>
               <div className="mb-8 flex items-center justify-between">
-                <Link
-                  href="/"
-                  className="inline-block text-gray-300 underline hover:text-gray-400"
+                <p
+                  onClick={() => router.back()}
+                  className="inline-block cursor-pointer text-gray-300 underline hover:text-gray-400"
                 >
                   Go back
-                </Link>
+                </p>
 
                 <div className="flex items-center space-x-4">
                   <button
