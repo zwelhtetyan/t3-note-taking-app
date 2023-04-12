@@ -1,6 +1,15 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+
+// Create a new ratelimiter, that allows 10 requests per 10 seconds
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(3, "1 m"),
+  analytics: true,
+});
 
 export const noteRouter = createTRPCRouter({
   getNotesByRelevantTitle: protectedProcedure
@@ -58,7 +67,14 @@ export const noteRouter = createTRPCRouter({
         authorId: z.string().nonempty(),
       })
     )
-    .mutation(({ ctx, input: { title, content, topicId, authorId } }) => {
+    .mutation(async ({ ctx, input: { title, content, topicId, authorId } }) => {
+      const { success } = await ratelimit.limit(ctx.session.user.id);
+
+      if (!success)
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+        });
+
       return ctx.prisma.note.create({
         data: { title, content, topicId, authorId },
       });
