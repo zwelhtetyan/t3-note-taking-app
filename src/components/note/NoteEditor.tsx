@@ -71,6 +71,7 @@ const NoteEditor = ({ editMode, noteToEdit }: NoteEditorProps) => {
       if (errObj?.topicId) toast.error(errObj.topicId[0]);
       else if (errObj?.title) toast.error(errObj.title[0]);
       else if (errObj?.content) toast.error(errObj.content[0]);
+      else toast.error("Failed to post! Please try again later.");
 
       setSubmitting(false);
     }
