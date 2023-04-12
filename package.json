@@ -22,6 +22,8 @@
     "@uiw/codemirror-theme-github": "^4.19.11",
     "@uiw/codemirror-theme-vscode": "^4.19.11",
     "@uiw/react-codemirror": "^4.19.11",
+    "@upstash/ratelimit": "^0.4.1",
+    "@upstash/redis": "^1.20.2",
     "daisyui": "^2.51.5",
     "next": "^13.2.4",
     "next-auth": "^4.20.1",
