@@ -67,7 +67,7 @@ export const Header = () => {
                   className="dropdown-content menu menu-compact mt-3 w-52 rounded border border-gray-500 bg-accent p-2 shadow"
                 >
                   <li>
-                    <a className="justify-between">Profile</a>
+                    <Link href="/">Home</Link>
                   </li>
                   <li>
                     <Link href="/new">Crate Note</Link>
